@@ -31,8 +31,8 @@ const svg = d3.select("#map")
 
 // Load the GeoJSON and CSV data
 Promise.all([
-  d3.json('singapore-subzones.json'),  // GeoJSON data for subzones
-  d3.csv('singapore-population.csv')   // Population data
+  d3.json("./singapore-subzones.json"),  // GeoJSON data for subzones
+  d3.csv("./singapore-population.csv")   // Population data
 ]).then(([subzones, population]) => {
   const populationMap = new Map();
   population.forEach(d => {
