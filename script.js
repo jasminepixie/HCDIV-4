@@ -105,27 +105,43 @@ Promise.all([
       d3.select("#tooltip").remove();
     });
 
-  // Add a legend for the color scale
-  const legend = svg
-    .append("g")
-    .attr("class", "legend")
-    .attr("transform", "translate(" + (window.innerWidth - 180) + ", 20)"); // Adjust the position to the right side of the screen
+// Add a heading 'Legend (population in numbers)' on top of the legend
+svg.append("text")
+  .attr("x", window.innerWidth - 220) // Adjust the x position to align with the legend boxes
+  .attr("y", 25) // Position the text closer to the legend
+  .attr("font-size", "16px")
+  .attr("fill", "white") // Set the font color to white
+  .text("Legend (population)");
 
-  const legendLinear = d3.legendColor()
-    .shapeWidth(30)
-    .orient("vertical")
-    .scale(colorScale)
-    .labelFormat(d3.format(".0f")) // Optional: format the population labels for better readability
-    .labels(function (d) {
-      return d3.format(",")(d); // Add commas to the population numbers for better readability
-    });
+// Add a legend for the color scale
+const legend = svg
+  .append("g")
+  .attr("class", "legend")
+  .attr("transform", "translate(" + (window.innerWidth - 220) + ", 40)"); // Adjust the position to the left
 
-  // Append the legend to the SVG container
-  svg.append("g")
-    .attr("class", "legend")
-    .attr("transform", "translate(" + (window.innerWidth - 180) + ", 20)") // Adjust position
-    .call(legendLinear);
-  
+const legendLinear = d3.legendColor()
+  .shapeWidth(30)
+  .orient("vertical")
+  .scale(colorScale)
+  .labels(function (d) {
+    // Format without decimals
+    return d.i === d.generatedLabels.length - 1
+      ? d3.format(".0f")(d.generatedLabels[d.i])
+      : d3.format(".0f")(d.generatedLabels[d.i]) +
+          " - " +
+          d3.format(".0f")(d.generatedLabels[d.i + 1]);
+  })
+  .labelFormat(d3.format(".0f")); // Ensure that the labels are formatted as integers
+
+// Append the legend to the SVG container
+const legendGroup = svg.append("g")
+  .attr("class", "legend")
+  .attr("transform", "translate(" + (window.innerWidth - 220) + ", 40)") // Adjust position
+  .call(legendLinear);
+
+// Set the text color of the legend labels to white
+legendGroup.selectAll("text")
+  .style("fill", "white"); // Set text color to white
   // Now update the map size based on the content
   updateMapSize();
 });
