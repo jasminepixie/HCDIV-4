@@ -5,20 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choropleth Map of Singapore</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3-legend.susielu.com/d3-legend.min.js"></script>
+    
+    <!-- Link to Google Fonts for Quicksand font -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Quicksand', sans-serif; /* Use Quicksand font */
+            background-color: #554649; /* Set background color */
+            color: #fff; /* White text for contrast */
+            overflow: hidden; /* Prevent scrolling on the body */
         }
 
         #map {
             width: 100%;
             height: 100vh; /* Ensure full viewport height */
+            position: relative; /* To position the overlay */
+            overflow: auto; /* Allow scrolling if map content exceeds the height */
+        }
+
+        h1 {
+    position: fixed; /* Make header fixed */
+    top: 20px;
+    left: 20px;
+    font-size: 36px;
+    margin: 0;
+    z-index: 10; /* Keep it on top */
+}
+
+p {
+    position: fixed; /* Make description fixed */
+    top: 70px; /* Reduced the top value to decrease space between heading and description */
+    left: 20px;
+    font-size: 18px;
+    margin: 0;
+    z-index: 10; /* Keep it on top */
+}
+
+        /* Style for the overlay that darkens the rest of the page */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            visibility: hidden; /* Hidden by default */
+        }
+
+        /* Tooltip styling */
+        #tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            pointer-events: none;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
+    <h1>Singapore Population Choropleth Map</h1>
+    <p>By Jasmine Lau (1009651)</p>
     <div id="map"></div>
+    <div class="overlay"></div> <!-- Add overlay div -->
     <script src="script.js"></script>
 </body>
 </html>
